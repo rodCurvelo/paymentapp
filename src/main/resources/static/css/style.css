@@ -1,0 +1,47 @@
+/*Big Screen */
+@media (min-width: 768px) {
+	.panel-default {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+
+	.alert-success{
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+
+	.alert-danger{
+		margin-left:10px;
+		margin-right: 10px;
+	}
+		
+}
+
+
+
+.navbar-brand{
+	margin-top: -6px;
+}
+
+.modal-title{
+	font-weight: bold;
+}
+
+
+
+
+
+.navbar-default{
+	background-color:black;
+}
+
+
+.jp-link-panel{
+	float: right;
+	padding:0px;
+}
+
+.jp-title-panel{
+	float:left;
+	padding-top:2px;
+}

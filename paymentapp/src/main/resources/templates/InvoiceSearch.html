@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="StandardLayout">
+	<head>
+		
+		<title>Invoice Search</title>
+		
+	</head>
+		
+	<section layout:fragment="content">
+		<div layout:include="GeneralMessage"></div>
+	
+	
+		<div class="panel panel-default">
+  			<div class="panel-heading">
+  				<div class="clearfix">
+    				<h1 class="panel-title jp-title-panel">Payment Research</h1>
+    				<a class="btn btn-link jp-link-panel" th:href="@{/invoice/add}">New Payment</a>
+    			</div>
+  			</div>
+		</div>
+		
+		<div class="panel-body">
+			<form method="GET" class="form-horizontal" th:action="@{/invoice}" th:object="${filter}" >
+				<div class="form-group">
+					<div class="col-sm-4">
+						<div class="input-group">
+							<input class="form-control" placeholder="What invoice are you looking for?"
+								autofocus="autofocus" th:field="*{description}"></input>
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th class="text-center col-md-1">#</th>
+							<th>Description</th>
+							<th class="text-center col-md-2">Expiration</th>
+							<th class="text-right col-md-2">Price</th>
+							<th class="text-center col-md-2">Status</th>
+							<th class="col-md-1"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="invoice : ${invoices}">
+							<td class="text-center" th:text="${invoice.coding}">1</td>
+							<td th:text="${invoice.description}"></td>
+							<td class="text-center" th:text="${{invoice.expiration}}"></td>
+							<td class="text-right" th:text="|$ ${invoice.price}|"></td>
+							<td class="text-center" th:attr="data-role=${invoice.coding}">
+								<span class="label" th:text="${invoice.status.description}"
+									th:classappend="${invoice.pending ? 'label-danger' : 'label-success'}"></span>
+							</td>
+							<td class= "text-center">
+								<a class="btn-btn-link btn-xs" th:href="@{/invoice/{coding}(coding=${invoice.coding})}" 
+									title="Edit" rel="tooltip" data-placement="top">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+								<a class="btn-btn-link btn-xs" data-toggle="modal" data-target="#ExcludingModal"
+									th:attr= "data-coding=${invoice.coding}, data-description=${invoice.description}"
+									title="Delete" rel="tooltip" data-placement="top">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+								<a class="btn-btn-link btn-xs js-updating-status" th:if="${invoice.pending}"
+										title="Received" rel="tooltip" data-placement="top"
+										th:attr="data-coding=${invoice.coding}"
+										th:href="@{/invoice/{coding}/receive(coding=${invoice.coding})}">
+									<span class="glyphicon glyphicon-check"></span>
+								</a>
+							</td>
+						</tr> 
+						<tr>
+							<td colspan="6" th:if="${#lists.isEmpty(invoices)}">No invoices found</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		<div layout:include="DeletingDialogBox"></div>
+		
+	</section>
+</html>

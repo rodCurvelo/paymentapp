@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/payment-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar target/paymmentApp-0.0.1-SNAPSHOT.jar
